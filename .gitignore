@@ -1,0 +1,10 @@
+# Archivos generados por Cargo
+/target/
+
+# Archivo de configuración de Cargo
+Cargo.lock
+
+# Archivos de respaldo y archivos temporales
+**~
+**.swp
+
