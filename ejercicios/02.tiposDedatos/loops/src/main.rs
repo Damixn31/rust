@@ -1,12 +1,15 @@
 use std::io;
 
 mod module {
+    pub mod convertor_fahrenheit_celsius;
     pub mod factorial;
     pub mod fibonacci;
     pub mod numero_primos;
     pub mod tabla_multiplicar;
 }
 
+use module::convertor_fahrenheit_celsius::celsius_to_fahrenheit;
+use module::convertor_fahrenheit_celsius::fahrenheit_to_celsius;
 use module::factorial::factorial_number;
 use module::fibonacci::fibonacci;
 use module::numero_primos::mostrar_numero_primos;
@@ -84,4 +87,31 @@ fn main() {
     for i in 0..=num {
         println!("{}", fibonacci(i));
     }
+
+    println!("---------------- convertor de Fahrenheit a Celsius");
+
+    println!("Ingrese un numero para converirlo de Fahrenheit a Celsius");
+    let mut input_fah = String::new();
+    io::stdin()
+        .read_line(&mut input_fah)
+        .expect("Error al leer la entrada");
+    let num_fah: f32 = input_fah.trim().parse().expect("Error al convertir numero");
+
+    let celsius_result = fahrenheit_to_celsius(num_fah);
+    println!("{:.2} F es igual a {:.2} C", num_fah, celsius_result);
+
+    println!("---------------- convertor de Celsius a fahrenheit");
+
+    println!("Ingrese un numero para convertir de celsius a fahrenheit");
+    let mut input_cel = String::new();
+    io::stdin()
+        .read_line(&mut input_cel)
+        .expect("Error al leer la entrada");
+    let num_cel = input_cel
+        .trim()
+        .parse()
+        .expect("Error al convertir el numero");
+
+    let fah_result = celsius_to_fahrenheit(num_cel);
+    println!("{:.2} C es igual a {:.2} F", num_cel, fah_result);
 }
