@@ -1,3 +1,7 @@
+
+use serde::{Deserialize, Deserializer, Serialize};
+
+#[derive(Serialize, Deserialize)]
 pub struct Task {
     pub id: u64,
     pub description: String,
