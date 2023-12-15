@@ -34,11 +34,25 @@ impl TaskManager {
         TaskManager::new()
     }
 
+    pub fn delete_task(&mut self, task_id: u64) {
+        self.tasks.retain(|task| task.id != task_id);
+    }
+
     pub fn complete_task(&mut self, task_id: u64) {
-        if let Some(task) = self.tasks.iter_mut().find(|t| t.id == task_id) {
-            task.complete();
-        } else {
-            print!("No se encontro la tarea  con ID {}", task_id);
+        for task in &mut self.tasks {
+            if task.id == task_id {
+                task.completed = true;
+                break;
+            }
+        }
+    }
+
+    pub fn uncomplete_task(&mut self, task_id: u64) {
+        for task in &mut self.tasks {
+            if task.id == task_id {
+                task.completed = false;
+                break;
+            }
         }
     }
 

@@ -1,4 +1,3 @@
-
 use serde::{Deserialize, Deserializer, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -21,4 +20,3 @@ impl Task {
         self.completed = true;
     }
 }
-
