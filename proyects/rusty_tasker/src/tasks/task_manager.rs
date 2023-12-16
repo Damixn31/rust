@@ -2,7 +2,9 @@ use crate::tasks::task::Task;
 use serde::{Deserialize, Serialize};
 use std::fs;
 
-#[derive(Serialize, Deserialize)]
+use super::task::Priority;
+
+#[derive(Debug, Serialize, Deserialize)]
 pub struct TaskManager {
     pub tasks: Vec<Task>,
 }
@@ -12,9 +14,9 @@ impl TaskManager {
         TaskManager { tasks: Vec::new() }
     }
 
-    pub fn add_task(&mut self, description: &str) {
+    pub fn add_task(&mut self, description: &str, priority: Priority) {
         let id = (self.tasks.len() + 1) as u64;
-        let new_task = Task::new(id, description);
+        let new_task = Task::new(id, description, priority);
         self.tasks.push(new_task);
     }
 

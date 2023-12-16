@@ -7,9 +7,11 @@ mod tasks {
 
 use tasks::task_manager::TaskManager;
 
+use crate::tasks::task::Priority;
+
 fn print_usage() {
     println!("Uso:");
-    println!("  add <description>    Agrega una tarea nueva");
+    println!("  add <description> <prioridad>    Agrega una tarea nueva");
     println!("  lt                   Lista todas las tareas");
     println!("  dt <id>              Borra una tarea por ID");
     println!("  ct <id>              Marca una tarea por ID");
@@ -38,11 +40,24 @@ fn main() {
         }
         "add" => {
             if let Some(description) = arguments.get(0) {
+                let priority_str = arguments.get(1).unwrap_or(&"Medium");
+                //let due_date = arguments.get(2);
+
+                let priority = match *priority_str {
+                    "Low" => Priority::Low,
+                    "Medium" => Priority::Medium,
+                    "High" => Priority::High,
+                    _ => {
+                        println!("Error: Prioridad no valida");
+                        return;
+                    }
+                };
+
                 println!("Valor de description:{}", description);
 
                 let mut loaded_task_manager = TaskManager::load_tasks("tasks.json");
 
-                loaded_task_manager.add_task(description);
+                loaded_task_manager.add_task(description, priority);
 
                 loaded_task_manager.save_tasks("tasks.json");
                 println!("Agregar tarea: {}", description);
