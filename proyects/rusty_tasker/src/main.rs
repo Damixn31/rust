@@ -18,6 +18,7 @@ fn print_usage() {
     println!("  lc                              Lista todas las tareas Completadas");
     println!("--------------------------------------------------------------------");
     println!("  dt <id>                         Borra una tarea por ID");
+    println!("  ed <id> <edita>                 Edita una tarea por ID");
     println!("  ct <id>                         Marca una tarea por ID");
     println!("  ut <id>              Marca una tarea incompleta por ID");
 }
@@ -110,6 +111,36 @@ fn main() {
                 }
             } else {
                 println!("Error: tenes que proporcinar un ID de la tarea que queres marcar como incompleta");
+            }
+        }
+        "ed" => {
+            if let Some(id_str) = arguments.get(0) {
+                if let Ok(id) = id_str.parse::<u64>() {
+                    if let Some(new_description) = arguments.get(1) {
+                        let new_priority_str = arguments.get(2).unwrap_or(&"Medium");
+                        let new_priority = match *new_priority_str {
+                            "Low" => Priority::Low,
+                            "Medium" => Priority::Medium,
+                            "High" => Priority::High,
+                            _ => {
+                                println!("Error: Prioridad no valida.");
+                                return;
+                            }
+                        };
+                        match loaded_task_manager.edit_task(id, new_description, new_priority) {
+                            Ok(()) => println!("Tarea editada con exito!"),
+                            Err(err) => println!("Error al editar la tarea: {}", err),
+                        }
+                    } else {
+                        println!(
+                            "Error: tenes que proporcinar una nueva descriptcion para la tarea"
+                        );
+                    }
+                } else {
+                    println!("Error: El ID debe ser un numero entero");
+                }
+            } else {
+                println!("Error: tenes que proporcinar el ID de la tarea a editar");
             }
         }
 
