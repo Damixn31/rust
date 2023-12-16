@@ -11,10 +11,10 @@ use crate::tasks::task::Priority;
 
 fn print_usage() {
     println!("Uso:");
-    println!("  add <description> <prioridad>    Agrega una tarea nueva");
-    println!("  lt                   Lista todas las tareas");
-    println!("  dt <id>              Borra una tarea por ID");
-    println!("  ct <id>              Marca una tarea por ID");
+    println!("  add <description> <prioridad>   Agrega una tarea nueva");
+    println!("  lt                              Lista todas las tareas");
+    println!("  dt <id>                         Borra una tarea por ID");
+    println!("  ct <id>                         Marca una tarea por ID");
     println!("  ut <id>              Marca una tarea incompleta por ID");
 }
 
