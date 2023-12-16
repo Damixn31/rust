@@ -12,7 +12,11 @@ use crate::tasks::task::Priority;
 fn print_usage() {
     println!("Uso:");
     println!("  add <description> <prioridad>   Agrega una tarea nueva");
+    println!("              Filtros");
     println!("  lt                              Lista todas las tareas");
+    println!("  lp                              Lista todas las tareas Pentientes");
+    println!("  lc                              Lista todas las tareas Completadas");
+    println!("--------------------------------------------------------------------");
     println!("  dt <id>                         Borra una tarea por ID");
     println!("  ct <id>                         Marca una tarea por ID");
     println!("  ut <id>              Marca una tarea incompleta por ID");
@@ -37,6 +41,12 @@ fn main() {
         }
         "lt" => {
             loaded_task_manager.list_tasks();
+        }
+        "lp" => {
+            loaded_task_manager.list_pending_tasks();
+        }
+        "lc" => {
+            loaded_task_manager.list_complete_tasks();
         }
         "add" => {
             if let Some(description) = arguments.get(0) {

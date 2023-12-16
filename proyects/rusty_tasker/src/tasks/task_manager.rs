@@ -73,4 +73,38 @@ impl TaskManager {
         }
         println!();
     }
+
+    // filtro por tareas pedientes
+    pub fn list_pending_tasks(&self) {
+        let pending_tasks: Vec<&Task> = self.tasks.iter().filter(|task| !task.completed).collect();
+
+        if pending_tasks.is_empty() {
+            println!("No se encontro tareas pentientes.");
+        } else {
+            println!("Tareas Pendientes:");
+            for task in pending_tasks {
+                println!(
+                    "ID: {}, Descripcion: {}, Prioridad: {:?}",
+                    task.id, task.description, task.priority
+                );
+            }
+        }
+    }
+
+    // filtro por tareas completadas
+    pub fn list_complete_tasks(&self) {
+        let complete_tasks: Vec<&Task> = self.tasks.iter().filter(|task| task.completed).collect();
+
+        if complete_tasks.is_empty() {
+            println!("No se encontro tareas completadas.");
+        } else {
+            println!("Tareas Completadas:");
+            for task in complete_tasks {
+                println!(
+                    "ID: {}, Descripcion: {}, Priority: {:?}",
+                    task.id, task.description, task.priority
+                );
+            }
+        }
+    }
 }
