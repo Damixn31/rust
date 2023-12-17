@@ -21,7 +21,7 @@ fn print_usage() {
     println!("  dt <id>                         Borra una tarea por ID");
     println!("  ed <id> <edita>                 Edita una tarea por ID");
     println!("  ct <id>                         Marca una tarea por ID");
-    println!("  ut <id>              Marca una tarea incompleta por ID");
+    println!("  ut <id>                         Marca una tarea incompleta por ID");
 }
 
 fn main() {
@@ -50,65 +50,35 @@ fn main() {
         "lc" => {
             loaded_task_manager.list_complete_tasks();
         }
-        "add" => {
-            match (arguments.get(0), arguments.get(1)) {
-                (Some(description), Some(priority_str)) => {
-                    let priority = match priority_str.to_lowercase().as_str() {
-                        "low" => Priority::Low,
-                        "medium" => Priority::Medium,
-                        "high" => Priority::High,
-                        _ => {
-                            eprintln!("Error: prioridad no valida");
-                            return;
-                        }
-                    };
+        "add" => match (arguments.get(0), arguments.get(1)) {
+            (Some(description), Some(priority_str)) => {
+                let priority = match priority_str.to_lowercase().as_str() {
+                    "low" => Priority::Low,
+                    "medium" => Priority::Medium,
+                    "high" => Priority::High,
+                    _ => {
+                        eprintln!("Error: prioridad no valida");
+                        return;
+                    }
+                };
 
-                    match loaded_task_manager.add_task(description, priority) {
-                        Ok(()) => {
-                            loaded_task_manager.save_tasks("tasks.json");
-                            println!("Tarea agregada exitosamente!");
-                        }
-                        Err(TaskError::EmptyDescription) => {
-                            eprintln!("Error la descripcion no puede estar vacia.");
-                        }
-                        _ => {
-                            eprintln!("Error al agregar tarea");
-                        }
+                match loaded_task_manager.add_task(description, priority) {
+                    Ok(()) => {
+                        loaded_task_manager.save_tasks("tasks.json");
+                        println!("Tarea agregada exitosamente!");
+                    }
+                    Err(TaskError::EmptyDescription) => {
+                        eprintln!("Error la descripcion no puede estar vacia.");
+                    }
+                    _ => {
+                        eprintln!("Error al agregar tarea");
                     }
                 }
-                _ => {
-                    eprintln!(
-                        "Error: tenes que proporcinar una descripcion y prioridad para la tarea"
-                    );
-                }
             }
-
-            //if let Some(description) = arguments.get(0) {
-            //    let priority_str = arguments.get(1).unwrap_or(&"Medium");
-            //let due_date = arguments.get(2);
-
-            //    let priority = match *priority_str {
-            //        "Low" => Priority::Low,
-            //        "Medium" => Priority::Medium,
-            //        "High" => Priority::High,
-            //        _ => {
-            //            println!("Error: Prioridad no valida");
-            //            return;
-            //        }
-            //    };
-
-            //    println!("Valor de description:{}", description);
-
-            //    let mut loaded_task_manager = TaskManager::load_tasks("tasks.json");
-
-            //    loaded_task_manager.add_task(description, priority);
-
-            //    loaded_task_manager.save_tasks("tasks.json");
-            //    println!("Agregar tarea: {}", description);
-            //} else {
-            //    println!("Error debes proporcionar una descriptcion de la tarea");
-            //}
-        }
+            _ => {
+                eprintln!("Error: tenes que proporcinar una descripcion y prioridad para la tarea");
+            }
+        },
         "dl" => {
             if let Some(id_str) = arguments.get(0) {
                 if let Ok(task_id) = id_str.parse::<u64>() {
