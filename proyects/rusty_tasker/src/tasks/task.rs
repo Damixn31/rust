@@ -7,6 +7,12 @@ pub enum Priority {
     Medium,
     High,
 }
+#[derive(Debug, Serialize, Deserialize)]
+pub enum TaskError {
+    TaskNotFound,
+    InvalidPriority,
+    EmptyDescription,
+}
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Task {
@@ -48,7 +54,7 @@ impl Task {
         format_time
     }
 
-    pub fn complete(&mut self) {
-        self.completed = true;
-    }
+    //pub fn complete(&mut self) {
+    //    self.completed = true;
+    //}
 }

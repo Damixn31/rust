@@ -8,6 +8,7 @@ mod tasks {
 use tasks::task_manager::TaskManager;
 
 use crate::tasks::task::Priority;
+use crate::tasks::task::TaskError;
 
 fn print_usage() {
     println!("Uso:");
@@ -50,38 +51,79 @@ fn main() {
             loaded_task_manager.list_complete_tasks();
         }
         "add" => {
-            if let Some(description) = arguments.get(0) {
-                let priority_str = arguments.get(1).unwrap_or(&"Medium");
-                //let due_date = arguments.get(2);
+            match (arguments.get(0), arguments.get(1)) {
+                (Some(description), Some(priority_str)) => {
+                    let priority = match priority_str.to_lowercase().as_str() {
+                        "low" => Priority::Low,
+                        "medium" => Priority::Medium,
+                        "high" => Priority::High,
+                        _ => {
+                            eprintln!("Error: prioridad no valida");
+                            return;
+                        }
+                    };
 
-                let priority = match *priority_str {
-                    "Low" => Priority::Low,
-                    "Medium" => Priority::Medium,
-                    "High" => Priority::High,
-                    _ => {
-                        println!("Error: Prioridad no valida");
-                        return;
+                    match loaded_task_manager.add_task(description, priority) {
+                        Ok(()) => {
+                            loaded_task_manager.save_tasks("tasks.json");
+                            println!("Tarea agregada exitosamente!");
+                        }
+                        Err(TaskError::EmptyDescription) => {
+                            eprintln!("Error la descripcion no puede estar vacia.");
+                        }
+                        _ => {
+                            eprintln!("Error al agregar tarea");
+                        }
                     }
-                };
-
-                println!("Valor de description:{}", description);
-
-                let mut loaded_task_manager = TaskManager::load_tasks("tasks.json");
-
-                loaded_task_manager.add_task(description, priority);
-
-                loaded_task_manager.save_tasks("tasks.json");
-                println!("Agregar tarea: {}", description);
-            } else {
-                println!("Error debes proporcionar una descriptcion de la tarea");
+                }
+                _ => {
+                    eprintln!(
+                        "Error: tenes que proporcinar una descripcion y prioridad para la tarea"
+                    );
+                }
             }
+
+            //if let Some(description) = arguments.get(0) {
+            //    let priority_str = arguments.get(1).unwrap_or(&"Medium");
+            //let due_date = arguments.get(2);
+
+            //    let priority = match *priority_str {
+            //        "Low" => Priority::Low,
+            //        "Medium" => Priority::Medium,
+            //        "High" => Priority::High,
+            //        _ => {
+            //            println!("Error: Prioridad no valida");
+            //            return;
+            //        }
+            //    };
+
+            //    println!("Valor de description:{}", description);
+
+            //    let mut loaded_task_manager = TaskManager::load_tasks("tasks.json");
+
+            //    loaded_task_manager.add_task(description, priority);
+
+            //    loaded_task_manager.save_tasks("tasks.json");
+            //    println!("Agregar tarea: {}", description);
+            //} else {
+            //    println!("Error debes proporcionar una descriptcion de la tarea");
+            //}
         }
         "dl" => {
             if let Some(id_str) = arguments.get(0) {
                 if let Ok(task_id) = id_str.parse::<u64>() {
-                    loaded_task_manager.delete_task(task_id);
-                    loaded_task_manager.save_tasks("tasks.json");
-                    println!("Tarea eliminada con el ID: {}", task_id);
+                    match loaded_task_manager.delete_task(task_id) {
+                        Ok(()) => {
+                            loaded_task_manager.save_tasks("tasks.json");
+                            println!("Tarea Eliminada con el ID: {}", task_id);
+                        }
+                        Err(TaskError::TaskNotFound) => {
+                            println!("Error: La tarea con ID: {} no fue encontrada", task_id);
+                        }
+                        Err(_) => {
+                            println!("Error inesperado");
+                        }
+                    }
                 } else {
                     println!("Error: El ID debe ser un numero entero");
                 }

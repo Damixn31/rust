@@ -1,4 +1,5 @@
 use crate::tasks::task::Task;
+use crate::tasks::task::TaskError;
 use serde::{Deserialize, Serialize};
 use std::fs;
 
@@ -15,10 +16,15 @@ impl TaskManager {
     }
 
     // agrega tarea
-    pub fn add_task(&mut self, description: &str, priority: Priority) {
+    pub fn add_task(&mut self, description: &str, priority: Priority) -> Result<(), TaskError> {
+        if description.is_empty() {
+            return Err(TaskError::EmptyDescription);
+        }
         let id = (self.tasks.len() + 1) as u64;
         let new_task = Task::new(id, description, priority);
         self.tasks.push(new_task);
+
+        Ok(())
     }
 
     // guarda tarea en el fichero
@@ -40,8 +46,13 @@ impl TaskManager {
     }
 
     // borra tarea
-    pub fn delete_task(&mut self, task_id: u64) {
-        self.tasks.retain(|task| task.id != task_id);
+    pub fn delete_task(&mut self, id: u64) -> Result<(), TaskError> {
+        if let Some(index) = self.tasks.iter().position(|task| task.id == id) {
+            self.tasks.remove(index);
+            Ok(())
+        } else {
+            Err(TaskError::TaskNotFound)
+        }
     }
 
     // marca como tarea completa
