@@ -12,6 +12,8 @@ pub enum TaskError {
     TaskNotFound,
     InvalidPriority,
     EmptyDescription,
+    SerializationError,
+    FileWriteError,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
