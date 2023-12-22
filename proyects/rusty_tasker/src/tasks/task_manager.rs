@@ -2,6 +2,7 @@ use crate::tasks::task::Task;
 use crate::tasks::task::TaskError;
 use serde::{Deserialize, Serialize};
 use std::fs;
+//use std::collections::HashSet;
 
 use super::task::Priority;
 
@@ -16,12 +17,19 @@ impl TaskManager {
     }
 
     // agrega tarea
-    pub fn add_task(&mut self, description: &str, priority: Priority) -> Result<(), TaskError> {
-        if description.is_empty() {
-            return Err(TaskError::EmptyDescription);
-        }
+    pub fn add_task(
+        &mut self,
+        description: &str,
+        priority: Priority,
+        categories: Option<&str>,
+        tags: Option<&str>,
+    ) -> Result<(), TaskError> {
         let id = (self.tasks.len() + 1) as u64;
-        let new_task = Task::new(id, description, priority);
+        let new_task = Task::new(id, description, priority, categories, tags)?;
+
+        //if description.is_empty() {
+        //    return Err(TaskError::EmptyDescription);
+        //}
         self.tasks.push(new_task);
 
         Ok(())
@@ -33,7 +41,7 @@ impl TaskManager {
         fs::write(file_path, tasks_json).expect("Error al escribir en el fichero");
     }
 
-    // carga las tareas a fichero
+    // carga las tareas a fichera
     pub fn load_tasks(file_path: &str) -> Self {
         if let Ok(tasks_json) = fs::read_to_string(file_path) {
             if let Ok(tasks) = serde_json::from_str::<Vec<Task>>(&tasks_json) {

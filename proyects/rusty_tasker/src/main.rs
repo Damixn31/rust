@@ -12,7 +12,7 @@ use crate::tasks::task::TaskError;
 
 fn print_usage() {
     println!("Uso:");
-    println!("  add <description> <prioridad>   Agrega una tarea nueva");
+    println!("  add <description> <prioridad> <categoria> <tag1, tag2>   Agrega una tarea nueva");
     println!("              Filtros");
     println!("  lt                              Lista todas las tareas");
     println!("  lp                              Lista todas las tareas Pentientes");
@@ -62,7 +62,11 @@ fn main() {
                     }
                 };
 
-                match loaded_task_manager.add_task(description, priority) {
+                let tags: Option<&str> = arguments.get(2).map(|tags_str| tags_str.trim());
+                let categories: Option<&str> =
+                    arguments.get(3).map(|category_str| category_str.trim());
+
+                match loaded_task_manager.add_task(description, priority, categories, tags) {
                     Ok(()) => {
                         loaded_task_manager.save_tasks("tasks.json");
                         println!("Tarea agregada exitosamente!");
