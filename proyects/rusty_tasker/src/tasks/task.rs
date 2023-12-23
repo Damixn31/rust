@@ -1,7 +1,7 @@
+use chrono::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::convert::From;
 use std::fmt;
-use std::time::{SystemTime, UNIX_EPOCH};
 
 use std::collections::HashSet;
 
@@ -97,22 +97,9 @@ impl Task {
     }
 
     pub fn current_time_as_string() -> String {
-        let timestamp = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .expect("Error al obtener la marca de tiempo actual")
-            .as_secs();
-
-        // formatear la fecha y hora
-        let format_time = format!(
-            "{:04}-{:02}-{:02} {:02}:{:02}:{:02}",
-            1970 + timestamp / 31556926,      //años
-            (timestamp % 31556926) / 2629743, //meses
-            (timestamp % 2629743) / 86400,    //dias
-            (timestamp % 86400) / 3600,       //horas
-            (timestamp % 3600) / 60,          //minutos
-            timestamp % 60                    //segundos
-        );
-        format_time
+        let local_time: DateTime<Local> = chrono::Local::now();
+        let formatted = format!("{}", local_time.format("%Y-%m-%d %H:%M:%S"));
+        formatted
     }
 
     //pub fn complete(&mut self) {

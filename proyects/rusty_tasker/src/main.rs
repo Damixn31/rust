@@ -28,7 +28,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        println!("Uso: {} <commando>  [argumentos]", args[0]);
+        print_usage();
         return;
     }
 
