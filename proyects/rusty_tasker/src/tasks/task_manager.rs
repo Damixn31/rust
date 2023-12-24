@@ -2,9 +2,11 @@ use crate::tasks::task::Task;
 use crate::tasks::task::TaskError;
 use serde::{Deserialize, Serialize};
 use std::fs;
-//use std::collections::HashSet;
 
 use super::task::Priority;
+use colored::Colorize;
+use prettytable::{color, Attr};
+use prettytable::{Cell, Row, Table};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TaskManager {
@@ -84,19 +86,36 @@ impl TaskManager {
     }
     // filtra todas las tareas
     pub fn list_tasks(&self) {
-        println!("Lista de tareas:");
+        let mut table = Table::new();
+        table.add_row(Row::new(vec![
+            Cell::new("Tarea")
+                .with_style(Attr::Bold)
+                .with_style(Attr::ForegroundColor(color::BRIGHT_WHITE)),
+            Cell::new("Descripcion")
+                .with_style(Attr::Bold)
+                .with_style(Attr::ForegroundColor(color::WHITE)),
+            Cell::new("Prioridad")
+                .with_style(Attr::Bold)
+                .with_style(Attr::ForegroundColor(color::WHITE)),
+            Cell::new("Estado")
+                .with_style(Attr::Bold)
+                .with_style(Attr::ForegroundColor(color::WHITE)),
+        ]));
+
         for task in &self.tasks {
-            let status = if task.completed {
-                "Completada"
+            let status_colored = if task.completed {
+                "Completada".green().to_string()
             } else {
-                "Pendiente"
+                "Pentiente".red().to_string()
             };
-            println!(
-                "ID: {}, descripcion: {}, Estado: {}",
-                task.id, task.description, status
-            );
+            table.add_row(Row::new(vec![
+                Cell::new(&task.id.to_string()),
+                Cell::new(&task.description),
+                Cell::new(&format!("{:?}", task.priority)),
+                Cell::new(&status_colored),
+            ]));
         }
-        println!();
+        table.printstd();
     }
 
     // filtro por tareas pedientes

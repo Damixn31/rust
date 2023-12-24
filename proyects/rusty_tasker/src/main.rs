@@ -83,7 +83,7 @@ fn main() {
                 eprintln!("Error: tenes que proporcinar una descripcion y prioridad para la tarea");
             }
         },
-        "dl" => {
+        "dt" => {
             if let Some(id_str) = arguments.get(0) {
                 if let Ok(task_id) = id_str.parse::<u64>() {
                     match loaded_task_manager.delete_task(task_id) {
