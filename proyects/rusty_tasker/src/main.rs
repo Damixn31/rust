@@ -5,24 +5,15 @@ mod tasks {
     pub mod task_manager;
 }
 
+mod usage {
+    pub mod usage;
+}
+
 use tasks::task_manager::TaskManager;
 
 use crate::tasks::task::Priority;
 use crate::tasks::task::TaskError;
-
-fn print_usage() {
-    println!("Uso:");
-    println!("  add <description> <prioridad> <categoria> <tag1, tag2>   Agrega una tarea nueva");
-    println!("              Filtros");
-    println!("  lt                              Lista todas las tareas");
-    println!("  lp                              Lista todas las tareas Pentientes");
-    println!("  lc                              Lista todas las tareas Completadas");
-    println!("--------------------------------------------------------------------");
-    println!("  dt <id>                         Borra una tarea por ID");
-    println!("  ed <id> <edita>                 Edita una tarea por ID");
-    println!("  ct <id>                         Marca una tarea por ID");
-    println!("  ut <id>                         Marca una tarea incompleta por ID");
-}
+use crate::usage::usage::print_usage;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
