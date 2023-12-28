@@ -1,3 +1,4 @@
+use crate::helpers::table_helper::crate_table;
 use crate::tasks::task::Task;
 use crate::tasks::task::TaskError;
 use serde::{Deserialize, Serialize};
@@ -5,8 +6,10 @@ use std::fs;
 
 use super::task::Priority;
 use colored::Colorize;
-use prettytable::{color, Attr};
-use prettytable::{Cell, Row, Table};
+//use prettytable::{color, Attr};
+use prettytable::{Cell, Row};
+
+//use crate::helpers::table_helper::crate_table;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TaskManager {
@@ -86,33 +89,33 @@ impl TaskManager {
     }
     // filtra todas las tareas
     pub fn list_tasks(&self) {
-        let mut table = Table::new();
-        table.add_row(Row::new(vec![
-            Cell::new("Tarea")
-                .with_style(Attr::Bold)
-                .with_style(Attr::ForegroundColor(color::BRIGHT_WHITE)),
-            Cell::new("Descripcion")
-                .with_style(Attr::Bold)
-                .with_style(Attr::ForegroundColor(color::WHITE)),
-            Cell::new("Prioridad")
-                .with_style(Attr::Bold)
-                .with_style(Attr::ForegroundColor(color::WHITE)),
-            Cell::new("Estado")
-                .with_style(Attr::Bold)
-                .with_style(Attr::ForegroundColor(color::WHITE)),
-        ]));
-
+        let mut table = crate_table(vec![
+            "Tarea",
+            "Descripcion",
+            "Prioridad",
+            "Estado",
+            "Categoria",
+            "Tags",
+            "Fecha de Creacion",
+        ]);
         for task in &self.tasks {
             let status_colored = if task.completed {
                 "Completada".green().to_string()
             } else {
                 "Pentiente".red().to_string()
             };
+
+            let categories_tasks = task.categories.as_deref().unwrap_or("N/A");
+            let tags_tasks = task.tags.iter().cloned().collect::<Vec<_>>().join(", ");
+
             table.add_row(Row::new(vec![
                 Cell::new(&task.id.to_string()),
                 Cell::new(&task.description),
                 Cell::new(&format!("{:?}", task.priority)),
                 Cell::new(&status_colored),
+                Cell::new(categories_tasks),
+                Cell::new(&tags_tasks),
+                Cell::new(&task.creation_time.to_string()),
             ]));
         }
         table.printstd();
@@ -120,18 +123,37 @@ impl TaskManager {
 
     // filtro por tareas pedientes
     pub fn list_pending_tasks(&self) {
+        let mut table = crate_table(vec![
+            "Tarea",
+            "Descripcion",
+            "Prioridad",
+            "Estado",
+            "Categorias",
+            "Tags",
+            "Fecha de Creacion",
+        ]);
+
         let pending_tasks: Vec<&Task> = self.tasks.iter().filter(|task| !task.completed).collect();
 
         if pending_tasks.is_empty() {
             println!("No se encontro tareas pentientes.");
         } else {
-            println!("Tareas Pendientes:");
             for task in pending_tasks {
-                println!(
-                    "ID: {}, Descripcion: {}, Prioridad: {:?}",
-                    task.id, task.description, task.priority
-                );
+                let status_colored = "Pentiente".red().to_string();
+                let categories_tasks = task.categories.as_deref().unwrap_or("N/A");
+                let tags_tasks = task.tags.iter().cloned().collect::<Vec<_>>().join(", ");
+
+                table.add_row(Row::new(vec![
+                    Cell::new(&task.id.to_string()),
+                    Cell::new(&task.description),
+                    Cell::new(&format!("{:?}", task.priority)),
+                    Cell::new(&status_colored),
+                    Cell::new(categories_tasks),
+                    Cell::new(&tags_tasks),
+                    Cell::new(&task.creation_time.to_string()),
+                ]));
             }
+            table.printstd();
         }
     }
 

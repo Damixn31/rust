@@ -8,6 +8,10 @@ mod usage {
     pub mod menu;
 }
 
+mod helpers {
+    pub mod table_helper;
+}
+
 use usage::commands::commands_arguments;
 
 fn main() {
