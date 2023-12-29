@@ -18,6 +18,8 @@ pub enum TaskError {
     EmptyDescription,
     SerializationError(String),
     FileWriteError(String),
+    TablePrintError(String),
+    InvalidIdFromat(String),
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -48,6 +50,8 @@ impl fmt::Display for TaskError {
             TaskError::EmptyDescription => write!(f, "La descripción no puede estar vacía"),
             TaskError::InvalidPriority => write!(f, "Prioridad no válida"),
             TaskError::SerializationError(err) => write!(f, "Error de serialización: {}", err),
+            TaskError::TablePrintError(err) => write!(f, "Error al imprimir: {}", err),
+            TaskError::InvalidIdFromat(err) => write!(f, "Error de formato: {}", err),
         }
     }
 }
