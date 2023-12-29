@@ -70,9 +70,9 @@ pub fn commands_arguments() {
                     }
                 };
 
-                let tags: Option<&str> = arguments.get(2).map(|tags_str| tags_str.trim());
+                let tags = arguments.get(3).map(|tags_str| tags_str.trim());
                 let categories: Option<&str> =
-                    arguments.get(3).map(|category_str| category_str.trim());
+                    arguments.get(2).map(|category_str| category_str.trim());
 
                 match loaded_task_manager {
                     Ok(mut task_manager) => {

@@ -3,12 +3,11 @@ use crate::helpers::table_helper::crate_table;
 use crate::tasks::task::Task;
 use crate::tasks::task::TaskError;
 use serde::{Deserialize, Serialize};
+use std::collections::HashSet;
 use std::fs;
 use std::result::Result;
 
 use super::task::Priority;
-use colored::Colorize;
-use prettytable::{Cell, Row};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct TaskManager {
@@ -29,7 +28,22 @@ impl TaskManager {
         tags: Option<&str>,
     ) -> Result<(), TaskError> {
         let id = (self.tasks.len() + 1) as u64;
-        let new_task = Task::new(id, description, priority, categories, tags)?;
+        // Convertir las etiquetas a un conjunto
+        //let mut tags_set = HashSet::new();
+
+        // Convertir tags de &str a HashSet<String>
+        let tags_set: HashSet<String> = match tags {
+            Some(tags_str) => tags_str
+                .split(',')
+                .map(|tag| tag.trim().to_string())
+                .collect(),
+            None => HashSet::new(),
+        };
+        //if let Some(tags_str) = tags {
+        //    let tags_vec: Vec<String> = tags_str.split(',').map(|s| s.trim().to_string()).collect();
+        //    tags_set.extend(tags_vec);
+        //}
+        let new_task = Task::new(id, description, priority, categories, Some(tags_set))?;
 
         self.tasks.push(new_task);
 
@@ -54,9 +68,6 @@ impl TaskManager {
                 return Ok(TaskManager { tasks });
             } else {
                 eprintln!("Error al deserializar tareas desde el fichero JSON");
-                //TaskError::SerializationError(
-                //    "Error al deserializar tareas desde el fichero JSON".to_string(),
-                //);
             }
         }
         Ok(TaskManager::new())
@@ -104,36 +115,20 @@ impl TaskManager {
             "Tags",
             "Fecha de Creacion",
         ]);
-        for task in &self.tasks {
-            let status_colored = if task.completed {
-                "Completada".green().to_string()
-            } else {
-                "Pentiente".red().to_string()
-            };
+        let task_refs: Vec<&Task> = self.tasks.iter().collect();
+        add_task_rows(&mut table, &task_refs)?;
 
-            let categories_tasks = task.categories.as_deref().unwrap_or("N/A");
-            let tags_tasks = task.tags.iter().cloned().collect::<Vec<_>>().join(", ");
+        //let mut buffer = Vec::new();
+        //table.print(&mut buffer).map_err(|err| {
+        //    TaskError::TablePrintError(format!("Error al imprimir la tabla: {}", err))
+        //})?;
 
-            table.add_row(Row::new(vec![
-                Cell::new(&task.id.to_string()),
-                Cell::new(&task.description),
-                Cell::new(&format!("{:?}", task.priority)),
-                Cell::new(&status_colored),
-                Cell::new(categories_tasks),
-                Cell::new(&tags_tasks),
-                Cell::new(&task.creation_time.to_string()),
-            ]));
-        }
-        let mut buffer = Vec::new();
-        table.print(&mut buffer).map_err(|err| {
-            TaskError::TablePrintError(format!("Error al imprimir la tabla: {}", err))
-        })?;
+        //let output = String::from_utf8(buffer).map_err(|_| {
+        //    TaskError::TablePrintError("Error al convertir el buffer a String".to_string())
+        //})?;
+        //println!("{}", output);
 
-        let output = String::from_utf8(buffer).map_err(|_| {
-            TaskError::TablePrintError("Error al convertir el buffer a String".to_string())
-        })?;
-        println!("{}", output);
-
+        table.printstd();
         Ok(())
     }
 
@@ -151,30 +146,35 @@ impl TaskManager {
 
         let pending_tasks: Vec<&Task> = self.tasks.iter().filter(|task| !task.completed).collect();
 
-        for task in pending_tasks {
-            let status_colored = "Pentiente".red().to_string();
-            let categories_tasks = task.categories.as_deref().unwrap_or("N/A");
-            let tags_tasks = task.tags.iter().cloned().collect::<Vec<_>>().join(", ");
+        //for task in pending_tasks {
+        //    let status_colored = "Pentiente".red().to_string();
+        //    let categories_tasks = task.categories.as_deref().unwrap_or("N/A");
+        //    let tags_tasks = task.tags.iter().cloned().collect::<Vec<_>>().join(", ");
 
-            table.add_row(Row::new(vec![
-                Cell::new(&task.id.to_string()),
-                Cell::new(&task.description),
-                Cell::new(&format!("{:?}", task.priority)),
-                Cell::new(&status_colored),
-                Cell::new(categories_tasks),
-                Cell::new(&tags_tasks),
-                Cell::new(&task.creation_time.to_string()),
-            ]));
-        }
-        let mut buffer = Vec::new();
-        table.print(&mut buffer).map_err(|err| {
-            TaskError::TablePrintError(format!("Error al imprimir la tabla: {}", err))
-        })?;
+        //    table.add_row(Row::new(vec![
+        //        Cell::new(&task.id.to_string()),
+        //        Cell::new(&task.description),
+        //        Cell::new(&format!("{:?}", task.priority)),
+        //        Cell::new(&status_colored),
+        //        Cell::new(categories_tasks),
+        //        Cell::new(&tags_tasks),
+        //        Cell::new(&task.creation_time.to_string()),
+        //    ]));
+        //}
 
-        let output = String::from_utf8(buffer).map_err(|_| {
-            TaskError::TablePrintError("Error al convertir el buffer a String".to_string())
-        })?;
-        print!("{}", output);
+        add_task_rows(&mut table, &pending_tasks)?;
+
+        table.printstd();
+
+        //let mut buffer = Vec::new();
+        //table.print(&mut buffer).map_err(|err| {
+        //    TaskError::TablePrintError(format!("Error al imprimir la tabla: {}", err))
+        //})?;
+
+        //let output = String::from_utf8(buffer).map_err(|_| {
+        //    TaskError::TablePrintError("Error al convertir el buffer a String".to_string())
+        //})?;
+        //print!("{}", output);
         Ok(())
     }
 
@@ -196,7 +196,7 @@ impl TaskManager {
                 "Tags",
                 "Fecha de Creacion",
             ]);
-            add_task_rows(&mut table, complete_tasks);
+            add_task_rows(&mut table, &complete_tasks)?;
             table.printstd();
             Ok(())
         }

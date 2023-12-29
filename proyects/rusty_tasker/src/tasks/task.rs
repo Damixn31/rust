@@ -22,20 +22,6 @@ pub enum TaskError {
     InvalidIdFromat(String),
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-pub enum Categories {
-    Personal,
-    Trabajo,
-    Estudios,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub enum Tags {
-    Urgente,
-    Importante,
-    Casa,
-}
-
 impl From<serde_json::Error> for TaskError {
     fn from(err: serde_json::Error) -> Self {
         TaskError::SerializationError(format!("Error al serializar la tarea: {}", err))
@@ -73,20 +59,11 @@ impl Task {
         description: &str,
         priority: Priority,
         categories: Option<&str>,
-        tags: Option<&str>,
+        tags: Option<HashSet<String>>,
     ) -> Result<Self, TaskError> {
         if description.is_empty() {
             return Err(TaskError::EmptyDescription);
         }
-        // inciar un conjunto de etiquetas vacio
-        let mut tags_set = HashSet::new();
-
-        // Agregar etiquetas si se proporcionaron
-        if let Some(tags_str) = tags {
-            let tags_vec: Vec<String> = tags_str.split(',').map(|s| s.trim().to_string()).collect();
-            tags_set.extend(tags_vec);
-        }
-
         let creation_time = Self::current_time_as_string();
         let new_task = Task {
             id,
@@ -95,7 +72,7 @@ impl Task {
             creation_time,
             completed: false,
             categories: categories.map(|c| c.to_string()),
-            tags: tags_set,
+            tags: tags.unwrap_or_default(),
         };
         Ok(new_task)
     }
@@ -105,8 +82,4 @@ impl Task {
         let formatted = format!("{}", local_time.format("%Y-%m-%d %H:%M:%S"));
         formatted
     }
-
-    //pub fn complete(&mut self) {
-    //    self.completed = true;
-    //}
 }

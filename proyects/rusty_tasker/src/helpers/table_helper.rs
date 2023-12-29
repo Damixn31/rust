@@ -1,7 +1,7 @@
 use colored::Colorize;
 use prettytable::{color, Attr, Cell, Row, Table};
 
-use crate::tasks::task::Task;
+use crate::tasks::task::{Task, TaskError};
 
 pub fn crate_table(headers_labels: Vec<&str>) -> Table {
     let mut table = Table::new();
@@ -18,7 +18,7 @@ pub fn crate_table(headers_labels: Vec<&str>) -> Table {
     table
 }
 
-pub fn add_task_rows(table: &mut Table, tasks: Vec<&Task>) {
+pub fn add_task_rows(table: &mut Table, tasks: &[&Task]) -> Result<(), TaskError> {
     for task in tasks {
         let status_colored = if task.completed {
             "Completada".green().to_string()
@@ -39,4 +39,5 @@ pub fn add_task_rows(table: &mut Table, tasks: Vec<&Task>) {
             Cell::new(&task.creation_time.to_string()),
         ]));
     }
+    Ok(())
 }
