@@ -108,7 +108,7 @@ impl TaskManager {
     pub fn list_tasks(&self) -> Result<(), TaskError> {
         let mut table = crate_table(vec![
             "Tarea",
-            "Descripcion",
+            "                          Descripcion",
             "Prioridad",
             "Estado",
             "Categoria",
@@ -136,7 +136,7 @@ impl TaskManager {
     pub fn list_pending_tasks(&self) -> Result<(), TaskError> {
         let mut table = crate_table(vec![
             "Tarea",
-            "Descripcion",
+            "                            Descripcion",
             "Prioridad",
             "Estado",
             "Categorias",
@@ -189,7 +189,7 @@ impl TaskManager {
         } else {
             let mut table = crate_table(vec![
                 "Tarea",
-                "Descripcion",
+                "                            Descripcion",
                 "Prioridad",
                 "Estado",
                 "Categorias",
@@ -221,5 +221,10 @@ impl TaskManager {
         } else {
             Err(format!("No se encontro ninguna tarea con el ID: {}", id))
         }
+    }
+
+    pub fn clear_tasks(&mut self) -> Result<(), TaskError> {
+        self.tasks.clear();
+        Ok(())
     }
 }

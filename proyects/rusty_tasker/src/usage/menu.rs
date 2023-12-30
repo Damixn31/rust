@@ -52,4 +52,10 @@ pub fn print_usage() {
             .bold()
             .red()
     );
+    println!(
+        "{}",
+        "\tdd  \t\t\t\t\t\t\t\tBorra todas las tareas"
+            //.bold()
+            .red()
+    );
 }

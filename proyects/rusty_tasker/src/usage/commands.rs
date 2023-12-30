@@ -218,6 +218,22 @@ pub fn commands_arguments() {
                 println!("Error: tenes que proporcinar el ID de la tarea a editar");
             }
         }
+        "dd" => match loaded_task_manager {
+            Ok(mut task_manager) => match task_manager.clear_tasks() {
+                Ok(()) => {
+                    if let Err(err) = task_manager.save_tasks("tasks.json") {
+                        eprintln!("Error al guardar: {:?}", err);
+                    }
+                }
+
+                Err(err) => {
+                    eprintln!("Error algo salio mal: {:?}", err);
+                }
+            },
+            Err(err) => {
+                eprintln!("Error al borrar todas las tareas: {:?}", err);
+            }
+        },
 
         _ => {
             println!("Commando no reconocido: {}", command);

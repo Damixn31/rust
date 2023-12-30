@@ -10,7 +10,7 @@ pub fn crate_table(headers_labels: Vec<&str>) -> Table {
         .map(|header| {
             Cell::new(header)
                 .with_style(Attr::Bold)
-                .with_style(Attr::ForegroundColor(color::BRIGHT_WHITE))
+                .with_style(Attr::ForegroundColor(color::BRIGHT_BLUE))
                 .with_style(Attr::BackgroundColor(color::BRIGHT_BLACK))
         })
         .collect();
@@ -19,6 +19,8 @@ pub fn crate_table(headers_labels: Vec<&str>) -> Table {
 }
 
 pub fn add_task_rows(table: &mut Table, tasks: &[&Task]) -> Result<(), TaskError> {
+    let max_description_length = 70;
+
     for task in tasks {
         let status_colored = if task.completed {
             "Completada".green().to_string()
@@ -26,12 +28,19 @@ pub fn add_task_rows(table: &mut Table, tasks: &[&Task]) -> Result<(), TaskError
             "Pendiente".red().to_string()
         };
 
+        // para que no se extienda la terminal si la description tiene una description larga
+        let truncat_description: String = task
+            .description
+            .chars()
+            .take(max_description_length)
+            .collect();
+
         let categories_tasks = task.categories.as_deref().unwrap_or("N/A");
         let tags_tasks = task.tags.iter().cloned().collect::<Vec<_>>().join(", ");
 
         table.add_row(Row::new(vec![
             Cell::new(&task.id.to_string()),
-            Cell::new(&task.description),
+            Cell::new(&truncat_description),
             Cell::new(&format!("{:?}", task.priority)),
             Cell::new(&status_colored),
             Cell::new(categories_tasks),
