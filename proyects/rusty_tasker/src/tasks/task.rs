@@ -5,7 +5,7 @@ use std::fmt;
 
 use std::collections::HashSet;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Clone, Serialize, Deserialize)]
 pub enum Priority {
     Low,
     Medium,
@@ -42,7 +42,7 @@ impl fmt::Display for TaskError {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Task {
     pub id: u64,
     pub description: String,

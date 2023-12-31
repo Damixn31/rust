@@ -11,7 +11,7 @@ pub fn crate_table(headers_labels: Vec<&str>) -> Table {
             Cell::new(header)
                 .with_style(Attr::Bold)
                 .with_style(Attr::ForegroundColor(color::BRIGHT_BLUE))
-                .with_style(Attr::BackgroundColor(color::BRIGHT_BLACK))
+            //.with_style(Attr::BackgroundColor(color::BRIGHT_BLACK))
         })
         .collect();
     table.add_row(Row::new(header_row));

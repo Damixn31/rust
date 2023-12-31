@@ -12,6 +12,11 @@ mod helpers {
     pub mod table_helper;
 }
 
+mod tests {
+    mod add_task_test;
+    mod save_tasks_test;
+}
+
 use usage::commands::commands_arguments;
 
 fn main() {

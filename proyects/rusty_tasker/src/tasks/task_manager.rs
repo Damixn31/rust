@@ -28,8 +28,6 @@ impl TaskManager {
         tags: Option<&str>,
     ) -> Result<(), TaskError> {
         let id = (self.tasks.len() + 1) as u64;
-        // Convertir las etiquetas a un conjunto
-        //let mut tags_set = HashSet::new();
 
         // Convertir tags de &str a HashSet<String>
         let tags_set: HashSet<String> = match tags {
@@ -39,11 +37,9 @@ impl TaskManager {
                 .collect(),
             None => HashSet::new(),
         };
-        //if let Some(tags_str) = tags {
-        //    let tags_vec: Vec<String> = tags_str.split(',').map(|s| s.trim().to_string()).collect();
-        //    tags_set.extend(tags_vec);
-        //}
-        let new_task = Task::new(id, description, priority, categories, Some(tags_set))?;
+
+        let clone_priority = priority.clone();
+        let new_task = Task::new(id, description, clone_priority, categories, Some(tags_set))?;
 
         self.tasks.push(new_task);
 
@@ -61,7 +57,7 @@ impl TaskManager {
         Ok(())
     }
 
-    // carga las tareas a fichera
+    // carga las tareas al fichero
     pub fn load_tasks(file_path: &str) -> Result<Self, TaskError> {
         if let Ok(tasks_json) = fs::read_to_string(file_path) {
             if let Ok(tasks) = serde_json::from_str::<Vec<Task>>(&tasks_json) {
@@ -104,11 +100,11 @@ impl TaskManager {
         }
         Ok(())
     }
-    // filtra todas las tareas
+    // lista todas las tareas
     pub fn list_tasks(&self) -> Result<(), TaskError> {
         let mut table = crate_table(vec![
             "Tarea",
-            "                          Descripcion",
+            "Descripcion",
             "Prioridad",
             "Estado",
             "Categoria",
@@ -118,25 +114,15 @@ impl TaskManager {
         let task_refs: Vec<&Task> = self.tasks.iter().collect();
         add_task_rows(&mut table, &task_refs)?;
 
-        //let mut buffer = Vec::new();
-        //table.print(&mut buffer).map_err(|err| {
-        //    TaskError::TablePrintError(format!("Error al imprimir la tabla: {}", err))
-        //})?;
-
-        //let output = String::from_utf8(buffer).map_err(|_| {
-        //    TaskError::TablePrintError("Error al convertir el buffer a String".to_string())
-        //})?;
-        //println!("{}", output);
-
         table.printstd();
         Ok(())
     }
 
-    // filtro por tareas pedientes
+    // lista por tareas pedientes
     pub fn list_pending_tasks(&self) -> Result<(), TaskError> {
         let mut table = crate_table(vec![
             "Tarea",
-            "                            Descripcion",
+            "Descripcion",
             "Prioridad",
             "Estado",
             "Categorias",
@@ -146,35 +132,10 @@ impl TaskManager {
 
         let pending_tasks: Vec<&Task> = self.tasks.iter().filter(|task| !task.completed).collect();
 
-        //for task in pending_tasks {
-        //    let status_colored = "Pentiente".red().to_string();
-        //    let categories_tasks = task.categories.as_deref().unwrap_or("N/A");
-        //    let tags_tasks = task.tags.iter().cloned().collect::<Vec<_>>().join(", ");
-
-        //    table.add_row(Row::new(vec![
-        //        Cell::new(&task.id.to_string()),
-        //        Cell::new(&task.description),
-        //        Cell::new(&format!("{:?}", task.priority)),
-        //        Cell::new(&status_colored),
-        //        Cell::new(categories_tasks),
-        //        Cell::new(&tags_tasks),
-        //        Cell::new(&task.creation_time.to_string()),
-        //    ]));
-        //}
-
         add_task_rows(&mut table, &pending_tasks)?;
 
         table.printstd();
 
-        //let mut buffer = Vec::new();
-        //table.print(&mut buffer).map_err(|err| {
-        //    TaskError::TablePrintError(format!("Error al imprimir la tabla: {}", err))
-        //})?;
-
-        //let output = String::from_utf8(buffer).map_err(|_| {
-        //    TaskError::TablePrintError("Error al convertir el buffer a String".to_string())
-        //})?;
-        //print!("{}", output);
         Ok(())
     }
 
@@ -189,7 +150,7 @@ impl TaskManager {
         } else {
             let mut table = crate_table(vec![
                 "Tarea",
-                "                            Descripcion",
+                "Descripcion",
                 "Prioridad",
                 "Estado",
                 "Categorias",

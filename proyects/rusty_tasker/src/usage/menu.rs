@@ -13,7 +13,7 @@ pub fn print_usage() {
         "{}",
         "\t---------------------------------------------------------------------------------------------------"
             .bold()
-            .red()
+            .cyan()
     );
     println!(
         "{}",
@@ -30,11 +30,11 @@ pub fn print_usage() {
         "{}",
         "\tlp  \t\t\t\t\t\t\t\tLista todas las tareas Pentientes"
             .bold()
-            .magenta()
+            .red()
     );
     println!(
         "{}",
-        "\tlc   \t\t\t\t\t\t\t\tLista todas las tareas Completadas".magenta()
+        "\tlc   \t\t\t\t\t\t\t\tLista todas las tareas Completadas".green()
     );
     println!("\n");
     println!("{}", "\tdt \t<id> \t\t\t\t\t\t\tBorra una tarea".red());
