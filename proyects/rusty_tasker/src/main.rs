@@ -14,7 +14,11 @@ mod helpers {
 
 mod tests {
     mod add_task_test;
+    mod complete_task_test;
+    mod delete_task_test;
+    mod load_tasks_test;
     mod save_tasks_test;
+    mod uncomplete_task_test;
 }
 
 use usage::commands::commands_arguments;
