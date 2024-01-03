@@ -1,61 +1,70 @@
 use colored::*;
 
 pub fn print_usage() {
-    println!("{}", "\n\t☞Uso:".bold().white());
-    println!(
-        "{}",
-        "\tCOMANDOS \t\tARGUMENTOS \t\t\t\tDESCRIPCION"
-            .bold()
-            .cyan()
-    );
+    macro_rules! print_line {
+        ($desc:expr, $color:ident) => {
+            println!("{:<10} {:<30} {:<50}", $desc.0.bold(), $desc.1, $desc.2);
+        };
+    }
 
-    println!(
-        "{}",
-        "\t---------------------------------------------------------------------------------------------------"
-            .bold()
-            .cyan()
+    let arg_use = format!("\n\t☞Uso:{}", "".green());
+    println!("{}", arg_use);
+    print_line!(
+        (
+            "\tCOMANDOS".cyan(),
+            "\t\tARGUMENTOS".bright_blue(),
+            "\t\tDESCRIPCION".magenta()
+        ),
+        cyan
     );
-    println!(
-        "{}",
-        "\tadd \t<description> <prioridad> <categoria> <tag1, tag2>\tAgrega una tarea nueva"
-            .green()
+    print_line!(
+        ("\t-------------------------------------------------------------------------------------------", "", ""),
+        cyan
     );
-    //println!("{}", "\n\tFILTROS".bold().cyan());
-    //println!("{}", "\t↓".cyan());
-    println!(
-        "{}",
-        "\n\tlt \t\t\t\t\t\t\t\tLista todas las tareas".magenta()
+    print_line!(
+        (
+            "\tadd",
+            "<description> <prioridad> <categoria> <tag1, tag2>",
+            "\tAgrega una tarea nueva".green()
+        ),
+        green
     );
-    println!(
-        "{}",
-        "\tlp  \t\t\t\t\t\t\t\tLista todas las tareas Pentientes"
-            .bold()
-            .red()
+    print_line!(
+        ("\tlt", "", "\t\t\tLista todas las tareas".bright_yellow()),
+        magenta
     );
-    println!(
-        "{}",
-        "\tlc   \t\t\t\t\t\t\t\tLista todas las tareas Completadas".green()
+    print_line!(
+        ("\tlp", "", "\t\t\tLista tareas pendientes".bright_yellow()),
+        red
+    );
+    print_line!(
+        ("\tlc", "", "\t\t\tLista tareas completadas".bright_yellow()),
+        green
     );
     println!("\n");
-    println!("{}", "\tdt \t<id> \t\t\t\t\t\t\tBorra una tarea".red());
-    println!(
-        "{}",
-        "\ted \t<id> <edita> \t\t\t\t\t\tEdita una tarea".white()
+    print_line!(("\tdt", "<id>", "\t\t\tBorra una tarea".red()), red);
+    print_line!(
+        ("\ted", "<id> <edita>", "\t\t\tEdita una tarea".cyan()),
+        white
     );
-    println!(
-        "{}",
-        "\tct \t<id> \t\t\t\t\t\t\tMarca una tarea completada".green()
+    print_line!(
+        (
+            "\tct",
+            "<id>",
+            "\t\t\tMarca una tarea completada".bright_green()
+        ),
+        green
     );
-    println!(
-        "{}",
-        "\tut \t<id> \t\t\t\t\t\t\tMarca una tarea incompleta"
-            .bold()
-            .red()
+    print_line!(
+        (
+            "\tut",
+            "<id>",
+            "\t\t\tMarca una tarea incompleta".bright_red()
+        ),
+        red
     );
-    println!(
-        "{}",
-        "\tdd  \t\t\t\t\t\t\t\tBorra todas las tareas"
-            //.bold()
-            .red()
+    print_line!(
+        ("\tdd", "", "\t\t\tBorra todas las tareas".red().bold()),
+        red
     );
 }
