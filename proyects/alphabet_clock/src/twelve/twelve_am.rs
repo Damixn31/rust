@@ -1,28 +1,33 @@
-pub fn one_am() -> Vec<(usize, usize)> {
+pub fn twelve_am() -> Vec<(usize, usize)> {
     vec![
-        (0, 0),
         (0, 1),
+        (0, 2),
+        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 8),
-        (0, 9),
-        (0, 10),
+        (0, 7),
         (1, 9),
         (1, 10),
+        (6, 0),
+        (6, 1),
+        (6, 2),
+        (6, 3),
     ]
 }
-
-pub fn one_and_five_am() -> Vec<(usize, usize)> {
+pub fn twelve_and_five_am() -> Vec<(usize, usize)> {
     vec![
-        (0, 0),
         (0, 1),
+        (0, 2),
+        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 8),
-        (0, 9),
-        (0, 10),
+        (0, 7),
         (1, 9),
         (1, 10),
+        (6, 0),
+        (6, 1),
+        (6, 2),
+        (6, 3),
         (6, 5),
         (8, 6),
         (8, 7),
@@ -31,18 +36,20 @@ pub fn one_and_five_am() -> Vec<(usize, usize)> {
         (8, 10),
     ]
 }
-
-pub fn one_and_ten_am() -> Vec<(usize, usize)> {
+pub fn twelve_and_ten_am() -> Vec<(usize, usize)> {
     vec![
-        (0, 0),
         (0, 1),
+        (0, 2),
+        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 8),
-        (0, 9),
-        (0, 10),
+        (0, 7),
         (1, 9),
         (1, 10),
+        (6, 0),
+        (6, 1),
+        (6, 2),
+        (6, 3),
         (6, 5),
         (7, 7),
         (7, 8),
@@ -50,18 +57,20 @@ pub fn one_and_ten_am() -> Vec<(usize, usize)> {
         (7, 10),
     ]
 }
-
-pub fn one_and_a_quarter() -> Vec<(usize, usize)> {
+pub fn twelve_and_quarter_am() -> Vec<(usize, usize)> {
     vec![
-        (0, 0),
         (0, 1),
+        (0, 2),
+        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 8),
-        (0, 9),
-        (0, 10),
+        (0, 7),
         (1, 9),
         (1, 10),
+        (6, 0),
+        (6, 1),
+        (6, 2),
+        (6, 3),
         (6, 5),
         (9, 5),
         (9, 6),
@@ -71,18 +80,20 @@ pub fn one_and_a_quarter() -> Vec<(usize, usize)> {
         (9, 10),
     ]
 }
-
-pub fn one_and_twenty_am() -> Vec<(usize, usize)> {
+pub fn twelve_and_twenty_am() -> Vec<(usize, usize)> {
     vec![
-        (0, 0),
         (0, 1),
+        (0, 2),
+        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 8),
-        (0, 9),
-        (0, 10),
+        (0, 7),
         (1, 9),
         (1, 10),
+        (6, 0),
+        (6, 1),
+        (6, 2),
+        (6, 3),
         (6, 5),
         (7, 1),
         (7, 2),
@@ -92,18 +103,20 @@ pub fn one_and_twenty_am() -> Vec<(usize, usize)> {
         (7, 6),
     ]
 }
-
-pub fn one_and_twenty_five_am() -> Vec<(usize, usize)> {
+pub fn twelve_and_twenty_five_am() -> Vec<(usize, usize)> {
     vec![
-        (0, 0),
         (0, 1),
+        (0, 2),
+        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 8),
-        (0, 9),
-        (0, 10),
+        (0, 7),
         (1, 9),
         (1, 10),
+        (6, 0),
+        (6, 1),
+        (6, 2),
+        (6, 3),
         (6, 5),
         (8, 0),
         (8, 1),
@@ -118,18 +131,20 @@ pub fn one_and_twenty_five_am() -> Vec<(usize, usize)> {
         (8, 10),
     ]
 }
-
-pub fn one_and_a_half_am() -> Vec<(usize, usize)> {
+pub fn it_is_half_past_twelve_am() -> Vec<(usize, usize)> {
     vec![
-        (0, 0),
         (0, 1),
+        (0, 2),
+        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 8),
-        (0, 9),
-        (0, 10),
+        (0, 7),
         (1, 9),
         (1, 10),
+        (6, 0),
+        (6, 1),
+        (6, 2),
+        (6, 3),
         (6, 5),
         (9, 0),
         (9, 1),
@@ -138,25 +153,22 @@ pub fn one_and_a_half_am() -> Vec<(usize, usize)> {
         (9, 4),
     ]
 }
-
-pub fn two_less_twenty_five_am() -> Vec<(usize, usize)> {
+pub fn one_less_twenty_five_am() -> Vec<(usize, usize)> {
     vec![
+        (0, 0),
         (0, 1),
-        (0, 2),
-        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 7),
-        (1, 0),
-        (1, 1),
-        (1, 2),
-        (1, 9),
-        (1, 10),
+        (0, 8),
+        (0, 9),
+        (0, 10),
         (6, 6),
         (6, 7),
         (6, 8),
         (6, 9),
         (6, 10),
+        (1, 9),
+        (1, 10),
         (8, 0),
         (8, 1),
         (8, 2),
@@ -170,8 +182,7 @@ pub fn two_less_twenty_five_am() -> Vec<(usize, usize)> {
         (8, 10),
     ]
 }
-
-pub fn two_less_twenty_am() -> Vec<(usize, usize)> {
+pub fn one_less_twenty_am() -> Vec<(usize, usize)> {
     vec![
         (0, 1),
         (0, 2),
@@ -179,9 +190,9 @@ pub fn two_less_twenty_am() -> Vec<(usize, usize)> {
         (0, 5),
         (0, 6),
         (0, 7),
-        (1, 0),
-        (1, 1),
-        (1, 2),
+        (0, 8),
+        (0, 9),
+        (0, 10),
         (1, 9),
         (1, 10),
         (6, 6),
@@ -197,18 +208,15 @@ pub fn two_less_twenty_am() -> Vec<(usize, usize)> {
         (7, 6),
     ]
 }
-
-pub fn a_quarter_to_two_am() -> Vec<(usize, usize)> {
+pub fn a_quarter_to_one_am() -> Vec<(usize, usize)> {
     vec![
+        (0, 0),
         (0, 1),
-        (0, 2),
-        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 7),
-        (1, 0),
-        (1, 1),
-        (1, 2),
+        (0, 8),
+        (0, 9),
+        (0, 10),
         (1, 9),
         (1, 10),
         (6, 6),
@@ -224,18 +232,15 @@ pub fn a_quarter_to_two_am() -> Vec<(usize, usize)> {
         (9, 10),
     ]
 }
-
-pub fn ten_to_two_am() -> Vec<(usize, usize)> {
+pub fn one_less_ten_am() -> Vec<(usize, usize)> {
     vec![
+        (0, 0),
         (0, 1),
-        (0, 2),
-        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 7),
-        (1, 0),
-        (1, 1),
-        (1, 2),
+        (0, 8),
+        (0, 9),
+        (0, 10),
         (1, 9),
         (1, 10),
         (6, 6),
@@ -249,18 +254,15 @@ pub fn ten_to_two_am() -> Vec<(usize, usize)> {
         (7, 10),
     ]
 }
-
-pub fn five_to_two_am() -> Vec<(usize, usize)> {
+pub fn one_less_five_am() -> Vec<(usize, usize)> {
     vec![
+        (0, 0),
         (0, 1),
-        (0, 2),
-        (0, 3),
         (0, 5),
         (0, 6),
-        (0, 7),
-        (1, 0),
-        (1, 1),
-        (1, 2),
+        (0, 8),
+        (0, 9),
+        (0, 10),
         (1, 9),
         (1, 10),
         (6, 6),

@@ -20,6 +20,6 @@ pub async fn print_square_auto(position_highlighted: Arc<Mutex<Vec<(usize, usize
 
         print_square(&position_highlighted_update, &hour_current);
 
-        sleep(Duration::from_secs(5)).await;
+        sleep(Duration::from_secs(1)).await;
     }
 }
