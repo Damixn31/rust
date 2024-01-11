@@ -1,4 +1,4 @@
-pub fn it_is_twelve_and_five() -> Vec<(usize, usize)> {
+pub fn it_is_twelve_and_five_am() -> Vec<(usize, usize)> {
     vec![
         (0, 1),
         (0, 2),
@@ -6,6 +6,8 @@ pub fn it_is_twelve_and_five() -> Vec<(usize, usize)> {
         (0, 5),
         (0, 6),
         (0, 7),
+        (1, 9),
+        (1, 10),
         (6, 0),
         (6, 1),
         (6, 2),
