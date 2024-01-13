@@ -34,6 +34,18 @@ use crate::two::two_pm::{
     two_and_twenty_five_pm, two_and_twenty_pm, two_pm,
 };
 
+use crate::three::three_am::{
+    four_less_a_quarter, four_less_five_am, four_less_ten_am, four_less_twenty_am,
+    four_less_twenty_five_am, three_am, three_and_a_quarter_am, three_and_five_am,
+    three_and_half_am, three_and_ten_am, three_and_twenty_am, three_and_twenty_five_am,
+};
+
+use crate::three::three_pm::{
+    four_less_five_pm, four_less_ten_pm, four_less_twenty_five_pm, four_less_twenty_pm,
+    three_and_a_quarter_pm, three_and_five_pm, three_and_half_pm, three_and_ten_pm,
+    three_and_twenty_five_pm, three_and_twenty_pm, three_pm,
+};
+
 pub fn get_position_highlighted(hour_current: &str) -> Vec<(usize, usize)> {
     let hour_dt = Local::now().time();
 
@@ -83,6 +95,20 @@ pub fn get_position_highlighted(hour_current: &str) -> Vec<(usize, usize)> {
         (2, 50..=54) => three_less_ten_am(),
         (2, 55..=59) => three_less_five_am(),
 
+        // ---------- 3
+        (3, 0..=4) => three_am(),
+        (3, 5..=9) => three_and_five_am(),
+        (3, 10..=14) => three_and_ten_am(),
+        (3, 15..=19) => three_and_a_quarter_am(),
+        (3, 20..=24) => three_and_twenty_am(),
+        (3, 25..=29) => three_and_twenty_five_am(),
+        (3, 30..=34) => three_and_half_am(),
+        (3, 35..=39) => four_less_twenty_five_am(),
+        (3, 40..=44) => four_less_twenty_am(),
+        (3, 45..=49) => four_less_a_quarter(),
+        (3, 50..=54) => four_less_ten_am(),
+        (3, 55..=59) => four_less_five_am(),
+
         //PM
         //  ------------- TWELVE
         (12, 0..=4) => twelve_pm(),
@@ -125,6 +151,22 @@ pub fn get_position_highlighted(hour_current: &str) -> Vec<(usize, usize)> {
         (14, 45..=49) => three_less_a_quarter_pm(),
         (14, 50..=54) => three_less_ten_pm(),
         (14, 55..=59) => three_less_five_pm(),
+
+        // ------- THREE
+        (15, 0..=4) => three_pm(),
+        (15, 5..=9) => three_and_five_pm(),
+        (15, 10..=14) => three_and_ten_pm(),
+        (15, 15..=19) => three_and_a_quarter_pm(),
+        (15, 20..=24) => three_and_twenty_pm(),
+        (15, 25..=29) => three_and_twenty_five_pm(),
+        (15, 30..=34) => three_and_half_pm(),
+        (15, 35..=39) => four_less_twenty_five_pm(),
+        (15, 40..=44) => four_less_twenty_pm(),
+        (15, 45..=49) => four_less_twenty_five_pm(),
+        (15, 50..=54) => four_less_ten_pm(),
+        (15, 55..=59) => four_less_five_pm(),
+
+        (19, 31) => three_and_a_quarter_pm(),
 
         _ => Vec::new(),
     }

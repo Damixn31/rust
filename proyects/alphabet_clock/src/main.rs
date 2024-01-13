@@ -27,6 +27,11 @@ mod two {
     pub mod two_pm;
 }
 
+mod three {
+    pub mod three_am;
+    pub mod three_pm;
+}
+
 use square::print_square::print_square;
 use square::print_square_auto::print_square_auto;
 
