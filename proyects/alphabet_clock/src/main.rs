@@ -32,6 +32,21 @@ mod three {
     pub mod three_pm;
 }
 
+mod four {
+    pub mod four_am;
+    pub mod four_pm;
+}
+
+mod five {
+    pub mod five_am;
+    pub mod five_pm;
+}
+
+mod six {
+    pub mod six_am;
+    pub mod six_pm;
+}
+
 use square::print_square::print_square;
 use square::print_square_auto::print_square_auto;
 
