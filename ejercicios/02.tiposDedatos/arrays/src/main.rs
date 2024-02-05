@@ -1,7 +1,20 @@
 use std::io;
 
+use crate::fun_matrices::suma_dos_matrices::sum_matrices;
+
+mod fun_matrices {
+    pub mod suma_dos_matrices;
+}
+
 fn main() {
     let a = [1, 2, 3, 4, 5];
+
+    let m1: [[i32; 3]; 2] = [[1, 2, 3], [4, 5, 6]];
+    let m2: [[i32; 3]; 2] = [[7, 8, 9], [10, 11, 12]];
+
+    let r = sum_matrices(m1, m2);
+
+    println!("{:?}", r);
 
     // imprime el array completo
     //println!("El array contiene {:?}", a);

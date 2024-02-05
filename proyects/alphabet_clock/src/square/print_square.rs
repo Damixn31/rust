@@ -5,21 +5,7 @@ use colored::*;
 
 use crossterm::{cursor::Hide, ExecutableCommand};
 
-//let hour_current = chrono::Local::now().format("%H:%M:%S").to_string();
-
 pub fn print_square(position_highlighted: &[(usize, usize)], hour_current: &str) -> io::Result<()> {
-    //let width = 1000;
-    //let height = 600;
-
-    //Command::new("kitty")
-    //.arg("--start-as=fullscreen")
-    //.arg("--initial-window-width")
-    //.arg(width.to_string())
-    //.arg("--initial-window-height")
-    //.arg(height.to_string())
-    //.spawn()
-    //.expect("No se pudo abrir la terminal Kitty con el tamaño especificado.");
-
     let words = [
         "ESONELASUNA",
         "DOSITRESOAM",
@@ -34,14 +20,11 @@ pub fn print_square(position_highlighted: &[(usize, usize)], hour_current: &str)
     ];
 
     let square: Vec<Vec<char>> = words.iter().take(10).map(|s| s.chars().collect()).collect();
-    // println!("la hora es {}", hour_current);
 
     if position_highlighted.is_empty() {
         for fila_chars in square.iter().take(10) {
             for &character in fila_chars {
                 print!("{}", format!("{} ", character).bright_black());
-
-                io::stdout().execute(Hide)?;
             }
             println!();
         }
@@ -66,5 +49,6 @@ pub fn print_square(position_highlighted: &[(usize, usize)], hour_current: &str)
         }
     }
 
+    io::stdout().execute(Hide)?;
     Ok(())
 }
