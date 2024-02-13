@@ -1,17 +1,26 @@
+use std::env;
 use std::process::{Command, Stdio};
 use std::{thread, time::Duration};
 
-pub fn timmer(duration_secs: u32) {
+use crate::audio::play_audio::play_audio;
+
+pub fn timmer(duration_secs: u32, audio_file: &Option<String>) {
+    //let ping_song = env::var("PATH_FILE").expect("Ruta de fichero no funciona");
     println!("\r\tInicio de temporizador de {} segundos!", duration_secs);
     for i in (1..=duration_secs).rev() {
-        println!("\rTiempo restante: {} segundos", i);
+        // aca quiero definir un temporizador que sea lindo a la vista verse en la consola
+        print!("\rTiempo restante: {} segundos", i);
         thread::sleep(Duration::from_secs(1));
     }
     println!("\rTiempo terminado!");
 
-    let _ = Command::new("mpg123")
-        .arg("/home/2d/Downloads/ping-82822.mp3")
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
-        .status();
+    if let Some(file) = audio_file {
+        play_audio(file);
+    }
+
+    //let _ = Command::new("mpg123")
+    //    .arg(path_file)
+    //    .stdout(Stdio::null())
+    //    .stderr(Stdio::null())
+    //    .status();
 }
