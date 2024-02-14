@@ -1,7 +1,5 @@
 use dotenv::dotenv;
 use run::run_executable::executable;
-//use load_exercises::load_weekly_exercises::load_weekly_exercises;
-use timing::run_timer::timmer;
 
 mod timing {
     pub mod run_timer;
@@ -22,7 +20,15 @@ mod audio {
     pub mod play_audio;
 }
 
+static mut EXECUTED: bool = false;
+
 fn main() {
     dotenv().ok();
-    executable();
+
+    unsafe {
+        if !EXECUTED {
+            executable();
+            EXECUTED = true;
+        }
+    }
 }

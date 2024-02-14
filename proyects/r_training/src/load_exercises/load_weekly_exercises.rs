@@ -19,11 +19,15 @@ pub fn load_weekly_exercises() -> HashMap<&'static str, Vec<Exercise>> {
         Ok(path) => path,
         Err(_) => "Error en la ruta".to_string(),
     };
+    let audio_apoyo_de_brazo_14 = match env::var("AUDIO_FLEX_APOYO_DE_BRAZO_14") {
+        Ok(path) => path,
+        Err(_) => "Error en la ruta".to_string(),
+    };
 
     let first_monday = vec![
         Exercise::new(
             "Salto de tijera",
-            Some(2),
+            Some(5),
             Some(audio_path_jump),
             Some(audio_ping.clone()),
             false,
@@ -32,7 +36,14 @@ pub fn load_weekly_exercises() -> HashMap<&'static str, Vec<Exercise>> {
             "Flexiones x12",
             None,
             Some(audio_path_flex),
-            Some(audio_ping),
+            Some(audio_ping.clone()),
+            false,
+        ),
+        Exercise::new(
+            "Flexiones con inclinacion (apoyo de brazo) x14",
+            None,
+            Some(audio_apoyo_de_brazo_14),
+            Some(audio_ping.clone()),
             false,
         ),
     ];
