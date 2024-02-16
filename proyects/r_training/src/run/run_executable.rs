@@ -1,5 +1,3 @@
-//use crate::load_exercises::load_weekly_exercises;
-
 use std::io::{self, BufRead};
 
 use crate::{
@@ -20,15 +18,14 @@ pub fn executable() {
         if let Some(duration) = exercise.duration_secs {
             timmer(duration);
 
-            if let Some(completion_sound) = &exercise.completion_sound {
-                play_audio(completion_sound);
-            }
-            if index < weekly_exercises["Lunes"].len() - 1 {
-                if let Some(next_exercise) = &weekly_exercises["Lunes"][index + 1].audio_file {
-                    dbg!(next_exercise);
-                    play_audio(next_exercise);
-                }
-            }
+            //if let Some(completion_sound) = &exercise.completion_sound {
+            //play_audio(completion_sound);
+            //}
+            //if index < weekly_exercises["Lunes"].len() - 1 {
+            //    if let Some(next_exercise) = &weekly_exercises["Lunes"][index + 1].audio_file {
+            //       play_audio(next_exercise);
+            //   }
+            //}
         } else {
             println!("\tPresionar Enter para pasar al siguiente ejercicio...");
             let mut input = String::new();

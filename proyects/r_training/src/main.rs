@@ -17,6 +17,7 @@ mod run {
 }
 
 mod audio {
+    pub mod get_audio;
     pub mod play_audio;
 }
 

@@ -1,14 +1,15 @@
 use std::{collections::HashMap, env};
 
-use crate::exercises::exercise::Exercise;
+use crate::{audio::get_audio::get_audio_path, exercises::exercise::Exercise};
 
 pub fn load_weekly_exercises() -> HashMap<&'static str, Vec<Exercise>> {
     let mut weekly_exercises = HashMap::new();
 
-    let audio_ping = match env::var("AUDIO_PATH_PING") {
-        Ok(path) => path,
-        Err(_) => "Error al encontrar la ruta".to_string(),
-    };
+    let audio_ping = get_audio_path("AUDIO_PATH_PING", "Error al encontrar ruta");
+    //let audio_ping = match env::var("AUDIO_PATH_PING") {
+    //    Ok(path) => path,
+    //    Err(_) => "Error al encontrar la ruta".to_string(),
+    //};
 
     let audio_path_jump = match env::var("AUDIO_PATH_JUMP") {
         Ok(path) => path,
