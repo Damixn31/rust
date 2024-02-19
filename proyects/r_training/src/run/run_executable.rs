@@ -18,13 +18,13 @@ pub fn executable() {
         if let Some(duration) = exercise.duration_secs {
             timmer(duration);
 
-            //if let Some(completion_sound) = &exercise.completion_sound {
-            //play_audio(completion_sound);
-            //}
+            if let Some(completion_sound) = &exercise.completion_sound {
+                play_audio(completion_sound);
+            }
             //if index < weekly_exercises["Lunes"].len() - 1 {
             //    if let Some(next_exercise) = &weekly_exercises["Lunes"][index + 1].audio_file {
-            //       play_audio(next_exercise);
-            //   }
+            //        play_audio(next_exercise);
+            //    }
             //}
         } else {
             println!("\tPresionar Enter para pasar al siguiente ejercicio...");
@@ -34,7 +34,7 @@ pub fn executable() {
         println!("\tEjercicio {} completado", exercise.name);
 
         if index < weekly_exercises["Lunes"].len() - 1 {
-            let rest_duration = 5;
+            let rest_duration = 1;
             println!("Descansa durante {} segundos...", rest_duration);
             timmer(rest_duration);
         }
