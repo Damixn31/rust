@@ -16,7 +16,7 @@ impl Quotes {
     pub fn new() -> Self {
         let categories = vec![
             Category {
-                name: "mo".to_string(),
+                name: "motivacion".to_string(),
                 quotes: vec![
                     "La vida es lo que pasa mientras estás ocupado haciendo otros planes. - John Lennon",
                     "Nunca te rindas en algo que realmente quieres. Es difícil esperar, pero peor es arrepentirse.",
@@ -37,11 +37,16 @@ impl Quotes {
 
     // Método para obtener una cita aleatoria de una categoría específica
     pub fn random_quote(&self, category_name: &str) -> Option<&'static str> {
+        println!("Buscando cita para la categoría: {}", category_name);
         if let Some(category) = self.categories.iter().find(|c| c.name == category_name) {
             if let Some(quote) = category.quotes.choose(&mut rand::thread_rng()) {
                 return Some(*quote);
             }
         }
+        println!(
+            "No se encontró ninguna cita para la categoría: {}",
+            category_name
+        );
         None
     }
 }
