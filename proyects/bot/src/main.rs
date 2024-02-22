@@ -5,6 +5,14 @@ mod handlers {
     pub mod message_handler;
 }
 
+mod citas {
+    pub mod citas_handler;
+    pub mod citas_impl;
+}
+
+use citas::citas_handler::Citas;
+use citas::citas_impl::Quotes;
+
 extern crate serenity;
 use handlers::discord_handler::DiscordHandler;
 use handlers::message_handler::MessageHandler;
@@ -19,6 +27,8 @@ struct General;
 
 #[tokio::main]
 async fn main() {
+    let quotes = Quotes::new();
+    let citas = Citas::new(quotes.clone());
     dotenv::dotenv().expect("Error al cargar el fichero .evn");
 
     let framework = StandardFramework::new().group(&GENERAL_GROUP);
@@ -28,6 +38,8 @@ async fn main() {
     let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
     let mut client = Client::builder(token, intents)
         .event_handler(DiscordHandler)
+        //.event_handler(Citas { quotes })
+        .event_handler(citas)
         .framework(framework)
         .await
         .expect("Error en el cliente");

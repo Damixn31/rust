@@ -11,7 +11,7 @@ pub struct DiscordHandler;
 impl EventHandler for DiscordHandler {
     async fn guild_member_addition(&self, ctx: Context, new_member: Member) {
         println!("Nuevo miembro agregado al servidor: {:?}", new_member);
-        let channel_id = ChannelId::new(767492206847066113 / 1204850870945063073);
+        let channel_id = ChannelId::new(1204850870945063073);
 
         if let Err(why) = MessageHandler::send_welcome_message(&ctx, &new_member, &channel_id).await
         {
@@ -28,6 +28,11 @@ impl EventHandler for DiscordHandler {
             "hola" => {
                 if let Err(why) = MessageHandler::handle_hello(&ctx, &msg).await {
                     println!("Error al manejar hola: {:?}", why);
+                }
+            }
+            "chau" => {
+                if let Err(why) = MessageHandler::handle_bye(&ctx, &msg).await {
+                    println!("Error al enviar chau: {:?}", why);
                 }
             }
             _ => {
