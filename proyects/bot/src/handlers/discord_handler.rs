@@ -30,20 +30,31 @@ impl EventHandler for DiscordHandler {
                     println!("Error al manejar hola: {:?}", why);
                 }
             }
+            "bien" => {
+                if let Err(why) = MessageHandler::handle_good(&ctx, &msg).await {
+                    println!("Error al manejar bien: {:?}", why);
+                }
+            }
             "chau" => {
                 if let Err(why) = MessageHandler::handle_bye(&ctx, &msg).await {
                     println!("Error al enviar chau: {:?}", why);
                 }
             }
             _ => {
+                let _ = msg
+                    .channel_id
+                    .say(&ctx.http, "Lo siento no entendi eso.")
+                    .await;
+
                 println!("Mensaje no reconocido: {}", msg.content);
             }
         }
-        if msg.content.contains("!ping") {
-            if let Err(why) = MessageHandler::handle_ping(&ctx, &msg).await {
-                println!("Error al manejar ping: {:?}", why);
-            }
-        }
+        //if msg.content.contains("!ping") {
+        //    if let Err(why) = MessageHandler::handle_ping(&ctx, &msg).await {
+        //        println!("Error al manejar ping: {:?}", why);
+        //    }
+        //}
+        //
     }
 
     async fn ready(&self, _: Context, ready: Ready) {
