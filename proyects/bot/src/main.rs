@@ -5,17 +5,22 @@ mod handlers {
     pub mod message_handler;
 }
 
+mod command_handler {
+    pub mod bye;
+    pub mod good;
+    pub mod hello;
+}
 mod citas {
     pub mod citas_handler;
     pub mod citas_impl;
 }
 
-use citas::citas_handler::Citas;
+//use citas::citas_handler::Citas;
 use citas::citas_impl::Quotes;
 
 extern crate serenity;
 use handlers::discord_handler::DiscordHandler;
-use handlers::message_handler::MessageHandler;
+//use handlers::message_handler::MessageHandler;
 
 use serenity::framework::standard::macros::group;
 use serenity::framework::standard::{Configuration, StandardFramework};
@@ -28,7 +33,8 @@ struct General;
 #[tokio::main]
 async fn main() {
     let quotes = Quotes::new();
-    let citas = Citas::new(quotes.clone());
+
+    //let citas = Citas::new(quotes.clone());
     dotenv::dotenv().expect("Error al cargar el fichero .evn");
 
     let framework = StandardFramework::new().group(&GENERAL_GROUP);
@@ -37,9 +43,10 @@ async fn main() {
     let token = env::var("DISCORD_TOKEN").expect("token");
     let intents = GatewayIntents::non_privileged() | GatewayIntents::MESSAGE_CONTENT;
     let mut client = Client::builder(token, intents)
-        .event_handler(DiscordHandler)
+        //.event_handler(DiscordHandler { quotes })
+        .event_handler(DiscordHandler { quotes })
         //.event_handler(Citas { quotes })
-        .event_handler(citas)
+        //.event_handler(citas)
         .framework(framework)
         .await
         .expect("Error en el cliente");
