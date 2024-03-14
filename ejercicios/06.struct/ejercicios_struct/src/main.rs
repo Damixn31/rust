@@ -4,6 +4,11 @@ use ejercicios_struct::ejercicio03::Fecha;
 use ejercicios_struct::ejercicio04::Book;
 use ejercicios_struct::ejercicio05::Circle;
 use ejercicios_struct::ejercicio06::Students;
+use ejercicios_struct::ejercicio07::BankAccount;
+use ejercicios_struct::ejercicio08::Triangle;
+use ejercicios_struct::ejercicio09::Employee;
+use ejercicios_struct::ejercicio10::Vehicle;
+use ejercicios_struct::ejercicio11::Point;
 
 fn main() {
     // 1. Ejercicio
@@ -62,4 +67,55 @@ fn main() {
         alumno.age,
         alumno.average()
     );
+
+    // 7. Ejercicio
+
+    let mut cuenta =
+        BankAccount::new_account(String::from("Marco"), String::from("54554412331322"), 100.0);
+
+    cuenta.deposit(500.0);
+    println!("Deposito exitoso. Saldo actual: {}", cuenta.check_balance());
+
+    match cuenta.extract(700.0) {
+        Ok(()) => println!("Retiro exitoso. Saldo actual: {}", cuenta.check_balance()),
+        Err(e) => println!("Error al retirar: {}", e),
+    }
+
+    // 8. Ejercicio
+
+    let side_a = 5.0;
+    let side_b = 3.0;
+    let side_c = 4.0;
+    if let Some(triangulo) = Triangle::new_triangle(side_a, side_b, side_c) {
+        println!("Perimetro del Triangulo: {}", triangulo.perimeter());
+        println!("Area del Triangulo: {}", triangulo.area_triangle());
+    } else {
+        println!("No es posible formar un triangulo con esas longitudes de lado.");
+    }
+
+    // 9. Ejercicio
+    let empleado = Employee::new_employee(String::from("Martina"), 30.0, 50.0);
+
+    println!(
+        "El salario semanal del empleado {} es: ${}",
+        empleado.name,
+        empleado.weekly_salary()
+    );
+    // 10. Ejercicio
+
+    let vehiculo = Vehicle {
+        brand: String::from("Toyota"),
+        model: String::from("Camry"),
+        year: 2022,
+    };
+
+    vehiculo.details_vehicle();
+
+    // 11. Ejercicio
+
+    let punto1 = Point::new_point(0.5, 0.4);
+    let punto2 = Point::new_point(0.0, 0.7);
+
+    let distancia = punto1.cal_distance(&punto2);
+    println!("La distancia entre los puntos es: {}", distancia)
 }
