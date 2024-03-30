@@ -7,7 +7,7 @@ fn clear_console() {
 }
 
 fn main() {
-    let total_frames = 70;
+    let total_frames = 30;
     let total_bytes = 1000;
     let mut _progress = 0;
 
@@ -56,5 +56,5 @@ fn progress_bar(progress: usize, total: usize) -> String {
             bar.push_str(&style("░").cyan().to_string());
         }
     }
-    format!("[{} {}%]", bar, progress_percentage)
+    format!("[{} {}]", bar, progress_percentage)
 }

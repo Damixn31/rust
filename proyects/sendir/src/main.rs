@@ -7,5 +7,5 @@ fn main() {
     usage_info.print_usege();
 
     //let dir = "directorio local";
-    app::run(config)
+    app::run(config).ok();
 }

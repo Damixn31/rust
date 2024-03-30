@@ -8,3 +8,4 @@ edition = "2021"
 [dependencies]
 clap = "4.5.3"
 dotenv = "0.15.0"
+ssh2 = "0.9.4"

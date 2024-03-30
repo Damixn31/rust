@@ -1,6 +1,12 @@
-use crate::{arguments::check_args, config::Config};
+use std::error::Error;
 
-pub fn run(config: Config) {
+use crate::{arguments::check_args, config::Config, connection::conn_tcp};
+
+pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    //let user = "ezerve";
+    //let host = "192.168.0.100";
+    //let port = 2323;
+
     match check_args() {
         Ok(dir) => {
             println!("Enviano con exito: {}", dir)
@@ -10,6 +16,16 @@ pub fn run(config: Config) {
             std::process::exit(1);
         }
     }
+    //match conn_tcp(user, host, port) {
+    //    Ok(session) => {
+    //        println!("!conexion ssh conectada con exito!");
+    //    }
+    //    Err(err) => {
+    //        eprintln!("Error al establecer la conexion ssh {}", err);
+    //        std::process::exit(1);
+    //    }
+    //}
+
     println!(
         "Copiando ficheros a {} en {}@{}:{}...",
         config.destiny,
@@ -20,4 +36,5 @@ pub fn run(config: Config) {
                     // Lógica para transferir archivos a través de SSH
                     // Por ejemplo, utilizando una biblioteca como ssh2-rs
     );
+    Ok(())
 }
