@@ -1,4 +1,4 @@
-use crate::structure::{agenda::Agenda, contact::Contact};
+use crate::structure::{agenda_struct::Agenda, contact_struct::Contact};
 
 impl Agenda {
     pub fn new_agenda() -> Agenda {
@@ -13,5 +13,13 @@ impl Agenda {
             address,
         };
         self.contacts.push(new_contact);
+    }
+
+    pub fn delete_contact(&mut self, name: &str) -> Option<Contact> {
+        if let Some(index) = self.contacts.iter().position(|c| c.name == name) {
+            Some(self.contacts.remove(index))
+        } else {
+            None
+        }
     }
 }

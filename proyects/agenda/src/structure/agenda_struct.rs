@@ -1,4 +1,4 @@
-use super::contact::Contact;
+use super::contact_struct::Contact;
 
 #[derive(Debug, Clone)]
 pub struct Agenda {

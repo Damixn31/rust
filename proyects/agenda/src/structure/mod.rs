@@ -1,2 +1,2 @@
-pub mod agenda;
-pub mod contact;
+pub mod agenda_struct;
+pub mod contact_struct;
