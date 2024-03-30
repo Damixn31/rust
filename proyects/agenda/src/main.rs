@@ -4,6 +4,7 @@ mod structure;
 use structure::agenda_struct::Agenda;
 
 fn main() {
+    // crea una agenda
     let mut agenda = Agenda::new_agenda();
 
     // Aca estamos ingresando datos a la agenda
