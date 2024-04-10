@@ -1,0 +1,1 @@
+/home/hiro/rust/aprendiendo/libreria_estandar/target/debug/liblibreria_estandar.rlib: /home/hiro/rust/aprendiendo/libreria_estandar/src/lib.rs /home/hiro/rust/aprendiendo/libreria_estandar/src/myfilesystem.rs
