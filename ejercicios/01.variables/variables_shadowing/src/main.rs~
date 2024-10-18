@@ -1,0 +1,118 @@
+fn main() {
+    // Ejercicio 1: Conversión de tipos
+    //Define una variable que inicialmente contenga un número como string, luego conviértelo a un número entero usando shadowing, y realiza una operación aritmética con el valor convertido.
+
+    //Instrucciones:
+    //1. Declara una variable num_str que contenga el string "50".
+    //2. Usa shadowing para convertir num_str a un número entero.
+    //3. Multiplica el valor convertido por 2 y almacénalo usando shadowing nuevamente.
+    //4. Imprime el resultado.
+    //Resultado esperado:
+    //El número final debería ser 100.
+
+    println!("----Ejercicio numero 1-----");
+    let num_str = "50";
+    let convert_num: i32 = num_str.parse().expect("no se pudo convertir");
+    let result_multi = convert_num * 2;
+
+    println!("el Resultado es: {}", result_multi);
+
+    println!("---Ejercicio numero 2----");
+    //Ejercicio 2: Operaciones matemáticas
+    //Usa shadowing para realizar una serie de operaciones matemáticas sobre una misma variable.
+
+    //Instrucciones:
+    //1. Declara una variable x con el valor 10.
+    //2. Usa shadowing para:
+    // Sumar 5 a x.
+    // Multiplicar el resultado por 2.
+    // Restar 3 al valor final.
+    //3. Imprime el valor final de x.
+    //Resultado esperado:
+    //El valor final de x debería ser 27.
+
+    let x = 10;
+    let x = x + 5;
+    let x = x * 2;
+    let x = x - 3;
+
+    println!("El resultado final de x es : {}", x);
+
+    println!("----Ejercicio 3-----");
+    //    Ejercicio 3: Reutilización de nombres en bloques
+    //Usa shadowing dentro de bloques para trabajar con diferentes valores de una misma variable.
+
+    //Instrucciones:
+    //1. Declara una variable total con valor 20.
+    //2. Dentro de un bloque {}, usa shadowing para modificar total sumando 10.
+    //3. Dentro de otro bloque {}, usa shadowing para dividir total por 2.
+    //4. Imprime el valor de total tanto dentro como fuera de cada bloque.
+    //Resultado esperado:
+    //El valor dentro de los bloques será diferente al de fuera.
+
+    let total = 20;
+    println!("el resultado del total es: {}", total);
+    {
+	let total = total + 10;
+	println!("el total de la suma es: {}", total);
+    };
+
+    {
+	let total = total / 2;
+	println!("el total de la division es: {}", total);
+    };
+
+    //Ejercicio 4: Limpiar datos
+    //Imagina que tienes un string con caracteres adicionales al principio y al final, y quieres limpiarlo usando shadowing.
+
+    //Instrucciones:
+    //Declara una variable raw_data que contenga el string " 42 ".
+    //Usa shadowing para:
+    //1. Limpiar los espacios al principio y al final del string.
+    //2. Convertir el string limpio en un número entero.
+    //3. Imprime el número final.
+    //Resultado esperado:
+    //Deberías imprimir el número 42 sin espacios ni errores.
+    println!("------Ejercicio 3------");
+    let raw_data = " 42 ";
+    let raw_data = raw_data.trim(); // trim() saca los espacios en blanco de ambos lados.
+    let raw_data: i32 = raw_data.parse().expect("No se pudo convertir"); // parse() converierte a entero.
+
+    println!("El resultado de es: {}", raw_data);
+
+    //    Ejercicio 5: Shadowing y tipos de datos
+    //Define una variable con un número decimal y luego conviértelo en un número entero usando shadowing.
+
+    //Instrucciones:
+    //1. Declara una variable price con el valor 19.99.
+    //2. Usa shadowing para redondear el valor hacia abajo y convertirlo en un número entero.
+    //3.Imprime el valor entero final de price.
+    //Resultado esperado:
+    //El número final debería ser 19.
+
+    println!("----Ejercicio 4----");
+    let prince: f32 = 19.99;
+    let prince = prince.floor() as i32; // floor() redondea haca abajo.
+    
+    println!("El resultado final de prince es: {}", prince);
+
+    //  Ejercicio 6: Manipulación de listas (Avanzado)
+    //Crea una lista de números y usa shadowing para manipular el mismo nombre de la variable con diferentes estados.
+
+    //Instrucciones:
+    //Declara una variable numbers que contenga una lista de números [1, 2, 3, 4, 5].
+    //Usa shadowing para:
+    //1. Filtrar solo los números pares.
+    //2. Sumar 1 a cada número.
+    //3.Imprime la lista final de numbers.
+    //Resultado esperado:
+    //La lista final debería ser [3, 5].
+
+    println!("---Ejercicio 6----");
+    let numbers = vec![1,2,3,4,5];
+    let numbers: Vec<i32> = numbers.into_iter().filter(|x| x % 2 == 0).map(|x| x + 1).collect();
+    
+    println!("Los numeros pares son: {:?}", numbers);
+
+
+}
