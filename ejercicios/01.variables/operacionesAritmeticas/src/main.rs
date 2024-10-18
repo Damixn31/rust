@@ -21,4 +21,3 @@ fn main() {
         println!("No se puede dividir por cero");
     }
 }
-
