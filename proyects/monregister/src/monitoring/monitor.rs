@@ -1,4 +1,5 @@
 use crate::monitoring::clean_terminal::clear_and_update_terminal;
+use crate::notifys::notify_local::send_notification;
 
 use super::connecting::get_connect_ips;
 use super::regex_util::compile_regex;
@@ -23,7 +24,8 @@ pub fn monitor_failed_login_attempts(
             clear_and_update_terminal(ip_attempts, &connectd_ips);
 
             if ip_attempts[&ip] > max_attempt {
-                println!("Alerta! Demasiados intentos fallidos desde IP: {}", ip);
+                println!("\tAlerta! Demasiados intentos fallidos desde IP: {}", ip);
+                send_notification(&ip, ip_attempts[&ip]);
             }
         }
     }

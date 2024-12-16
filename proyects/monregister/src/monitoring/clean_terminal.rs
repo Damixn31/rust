@@ -30,6 +30,6 @@ pub fn clear_and_update_terminal(ip_attempts: &HashMap<String, u32>, connected_i
     }
 
     for ip in connected_ips {
-        println!("\n\t✅ Conexion activa desde IP: {}", ip);
+        println!("\t✅ Conexion activa desde IP: {}", ip);
     }
 }
