@@ -1,29 +1,28 @@
-use std::collections::HashMap;
-
-use crate::{
-    monitoring::{
-        journalctl::{get_stdout_reader, spawn_journalctl_process},
-        monitor::monitor_failed_login_attempts,
-    },
-    notifys::notify_local::send_notification,
+use std::{
+    collections::HashMap,
+    sync::{Arc, Mutex},
+    thread,
 };
 
+use crate::monitoring::mon_logs::monitor_logs;
+
 pub fn run() {
+    let services = vec!["sshd.service", "mariadb.service"];
+
     let max_attempt = 1;
 
-    let mut ip_attempts = HashMap::new();
+    let ip_attempts = Arc::new(Mutex::new(HashMap::new()));
+    let mut handles = vec![];
 
-    if let Ok(process) = spawn_journalctl_process() {
-        let mut reader = get_stdout_reader(process).expect("Failed to get stdout reader");
+    for service in services {
+        let ip_attempts = Arc::clone(&ip_attempts);
+        let handle = thread::spawn(move || {
+            monitor_logs(service, ip_attempts, max_attempt);
+        });
+        handles.push(handle);
+    }
 
-        monitor_failed_login_attempts(&mut reader, &mut ip_attempts, max_attempt);
-
-        for (ip, count) in &ip_attempts {
-            if *count > max_attempt {
-                send_notification(ip, *count);
-            }
-        }
-    } else {
-        eprintln!("Failed to spawn journalctl process");
+    for handle in handles {
+        handle.join().unwrap();
     }
 }
