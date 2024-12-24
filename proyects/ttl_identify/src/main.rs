@@ -1,10 +1,21 @@
 use std::process::exit;
 
-use ttl_identify::run::runing::run_program;
+use dotenv::dotenv;
+use ttl_identify::{config::conf::get_ipinfo_token, run::runing::run_program};
 
-fn main() {
-    if let Err(e) = run_program() {
-        eprintln!("{}", e);
-        exit(1);
+#[tokio::main]
+async fn main() {
+    dotenv().ok();
+    match get_ipinfo_token() {
+        Ok(token) => {
+            if let Err(e) = run_program(token).await {
+                eprintln!("{}", e);
+                exit(1);
+            }
+        }
+        Err(e) => {
+            eprintln!("{}", e);
+            exit(1);
+        }
     }
 }

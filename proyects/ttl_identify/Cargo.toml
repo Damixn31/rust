@@ -5,3 +5,7 @@ edition = "2021"
 
 [dependencies]
 colored = "2.1.0"
+reqwest = { version = "0.12.9", features = ["json"] }
+serde = { version = "1.0.9", features = ["derive"] }
+tokio = { version = "1.9.0", features = ["full"] }
+dotenv = "0.15.0"
